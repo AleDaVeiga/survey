@@ -1,0 +1,24 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: Alessandro
+    changes:
+    - createTable:
+        tableName: user_roles
+        columns:
+        - column:
+            name: user_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_user_role
+              references: users(id)
+        - column:
+            name: role_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_role_user
+              references: roles(id)
+    - rollback:
+        tableName: user_roles

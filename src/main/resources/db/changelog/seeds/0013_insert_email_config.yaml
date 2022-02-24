@@ -1,0 +1,29 @@
+databaseChangeLog:
+- changeSet:
+    id: 2
+    author: Alessandro
+    changes:
+    - insert:
+        tableName: email_config
+        columns:
+        - column:
+            name: id
+            value: 1
+        - column:
+            name: host
+            value: smtp.gmail.com
+        - column:
+            name: port
+            value: 587
+        - column:
+            name: username
+            value: survey@survey.com
+        - column:
+            name: password
+            value: survey
+        - column:
+            name: smtp_auth
+            valueBoolean: true
+        - column:
+            name: smtp_starttls_enable
+            valueBoolean: true

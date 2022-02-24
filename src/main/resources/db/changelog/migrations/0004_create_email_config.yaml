@@ -1,0 +1,47 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: Alessandro
+    changes:
+    - createTable:
+        tableName: email_config
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: host
+            type: varchar(50)
+            constraints:
+              nullable: false
+        - column:
+            name: port
+            type: int
+            constraints:
+              nullable: false
+        - column:
+            name: username
+            type: varchar(50)
+            constraints:
+              nullable: false
+        - column:
+            name: password
+            type: varchar(50)
+            constraints:
+              nullable: false
+        - column:
+            name: smtp_auth
+            type: boolean
+            constraints:
+              nullable: false
+        - column:
+            name: smtp_starttls_enable
+            type: boolean
+            constraints:
+              nullable: false
+    - rollback:
+        tableName: email_config

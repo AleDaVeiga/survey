@@ -1,0 +1,50 @@
+databaseChangeLog:
+- changeSet:
+    id: 2
+    author: Alessandro
+    changes:
+    - insert:
+        tableName: roles
+        columns:
+        - column:
+            name: id
+            value: 1
+        - column:
+            name: name
+            value: ROLE_ADMIN
+        - column:
+            name: created_at
+            value: ${now}
+        - column:
+            name: updated_at
+            value: ${now}
+    - insert:
+        tableName: roles
+        columns:
+        - column:
+            name: id
+            value: 2
+        - column:
+            name: name
+            value: ROLE_MANAGE
+        - column:
+            name: created_at
+            value: ${now}
+        - column:
+            name: updated_at
+            value: ${now}
+    - insert:
+        tableName: roles
+        columns:
+        - column:
+            name: id
+            value: 3
+        - column:
+            name: name
+            value: ROLE_PRODUCE
+        - column:
+            name: created_at
+            value: ${now}
+        - column:
+            name: updated_at
+            value: ${now}

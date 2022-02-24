@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>User created</title>
+</head>
+<body style="font-family: sans-serif;">
+	<div>
+		<div style="background-color: #fff; width: 500px; border: 5px solid lightgray;">
+			<div style="font-size: 14px;">
+				<h1 style="margin-left: 13px;">Validade user: <span th:text="${user.login}"></span></h1>
+				<p style="margin-left: 13px;"><b>E-mail:</b></p>
+				<p style="margin-left: 13px; margin-top: 5px;"><span th:text="${email}"></span></p>
+			</div>
+			<div
+				style="background-color: gray; width: 500px; height: 29px; margin-top: 6px; text-align: -webkit-center; padding-top: 20px; font-size: 11px; color: #fff;">
+				<span>You receive this e-mail because it was attached to an account in Survey. Please validate here.</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

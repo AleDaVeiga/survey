@@ -1,0 +1,7 @@
+databaseChangeLog:
+- include:
+    file: migrations.yaml
+    relativeToChangelogFile: true
+- include:
+    file: seeds.yaml
+    relativeToChangelogFile: true

@@ -1,0 +1,46 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: Alessandro
+    changes:
+    - createTable:
+        tableName: contratos
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: description
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: poll_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_comment_poll
+              references: polls(id)
+        - column:
+            name: user_id
+            type: int
+            constraints:
+              nullable: true
+              foreignKeyName: fk_comment_user
+              references: users(id)
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+    - rollback:
+        tableName: contratos

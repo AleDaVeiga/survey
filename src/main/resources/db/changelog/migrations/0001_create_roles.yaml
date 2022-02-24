@@ -1,0 +1,32 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: Alessandro
+    changes:
+    - createTable:
+        tableName: roles
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(60)
+            constraints:
+              nullable: false
+        - column:
+            name: created_at
+            type: timestamp
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: timestamp
+            constraints:
+              nullable: false
+    - rollback:
+        tableName: roles

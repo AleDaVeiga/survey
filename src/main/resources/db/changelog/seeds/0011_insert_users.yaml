@@ -1,0 +1,41 @@
+databaseChangeLog:
+- changeSet:
+    id: 2
+    author: Alessandro
+    changes:
+    - insert:
+        tableName: users
+        columns:
+        - column:
+            name: id
+            value: 1
+        - column:
+            name: login
+            value: admin
+        - column:
+            name: password
+            value: $2a$10$MvrnO3og1JtP2b3pbfMTGOdMxFBiw9b24BjQcYe/qnC4PFS/PXKh2
+        - column:
+            name: created_at
+            value: ${now}
+        - column:
+            name: updated_at
+            value: ${now}
+    - insert:
+        tableName: users
+        columns:
+        - column:
+            name: id
+            value: 2
+        - column:
+            name: login
+            value: manage
+        - column:
+            name: password
+            value: $2a$10$MvrnO3og1JtP2b3pbfMTGOdMxFBiw9b24BjQcYe/qnC4PFS/PXKh2
+        - column:
+            name: created_at
+            value: ${now}
+        - column:
+            name: updated_at
+            value: ${now}

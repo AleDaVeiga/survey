@@ -1,0 +1,12 @@
+databaseChangeLog:
+- property:
+    name: now
+    value: now()
+    dbms: mysql
+- property:
+    name: now
+    value: now()
+    dbms: h2
+- includeAll:
+    path: seeds
+    relativeToChangelogFile: true
