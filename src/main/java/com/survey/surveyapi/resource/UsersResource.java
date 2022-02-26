@@ -75,7 +75,7 @@ public class UsersResource {
 	}
 
 	@PostMapping("/validate")
-	public User restabelecer(@RequestBody UserValidateDTO user) {
+	public User validate(@RequestBody UserValidateDTO user) {
 		return usersService.validate(user);
 	}
 }

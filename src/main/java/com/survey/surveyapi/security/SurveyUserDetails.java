@@ -9,12 +9,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.survey.surveyapi.dto.BaseEntityDTO;
 import com.survey.surveyapi.model.User;
 
-public class SurveyUserDetails implements UserDetails {
+public class SurveyUserDetails extends BaseEntityDTO implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
 	private String login;
 	@JsonIgnore
 	private String password;
@@ -35,10 +35,6 @@ public class SurveyUserDetails implements UserDetails {
 				user.getLogin(), //
 				user.getPassword(), //
 				authorities);
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public String getUsername() {

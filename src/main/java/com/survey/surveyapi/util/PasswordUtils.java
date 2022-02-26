@@ -12,27 +12,28 @@ public class PasswordUtils {
 	private static final Logger logger = getLogger(PasswordUtils.class);
 
 	public static final String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z]).{6,16})";
+
+	private static char[] ALLOWED_CHARACTERS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+			'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C',
+			'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+			'Y', 'Z' };
 	
 	public static String getRandomPassword(int numMaxCarac) {
 		Random ran = new Random();
-		char[] caractetes = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-				'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C',
-				'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-				'Y', 'Z' };
 		char[] result = new char[numMaxCarac];
 		try {
 			for (int i = 0; i < numMaxCarac; i++) {
-				int a = ran.nextInt(caractetes.length);
-				result[i] = caractetes[a];
+				int a = ran.nextInt(ALLOWED_CHARACTERS.length);
+				result[i] = ALLOWED_CHARACTERS[a];
 			}
 			// force an uppercase, lowercase and numeric character
 			// uppercase at position 0 or 1
-			result[ran.nextInt(2)] = caractetes[ran.nextInt(26) + 36];
-			result[ran.nextInt(2) + 2] = caractetes[ran.nextInt(26) + 10];
-			result[ran.nextInt(numMaxCarac - 4) + 4] = caractetes[ran.nextInt(10)];
+			result[ran.nextInt(2)] = ALLOWED_CHARACTERS[ran.nextInt(26) + 36];
+			result[ran.nextInt(2) + 2] = ALLOWED_CHARACTERS[ran.nextInt(26) + 10];
+			result[ran.nextInt(numMaxCarac - 4) + 4] = ALLOWED_CHARACTERS[ran.nextInt(10)];
 			return new String(result);
 		} catch (Exception e) {
-			logger.info("Não foi possível gerar uma senha aleatória.");
+			logger.info("Could not generate a random password.");
 			return "5Rv&y";
 		}
 	}

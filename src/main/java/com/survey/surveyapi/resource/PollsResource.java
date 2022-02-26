@@ -14,6 +14,7 @@ import com.survey.surveyapi.security.SurveyUserDetails;
 import com.survey.surveyapi.service.PollsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,6 +47,13 @@ public class PollsResource {
 		return pollsService.create(poll);
 	}
 
+	@PostMapping("/relationship")
+	@Transactional
+	@PreAuthorize("isAuthenticated()")
+	public void createRelationship(@RequestBody List<Long> pollIds) throws Exception {
+		pollsService.createRelationship(pollIds, (SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+	}
+
 	@PutMapping("/{id}")
 	@ResponseBody
 	@Transactional
@@ -66,11 +74,16 @@ public class PollsResource {
 	@GetMapping
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<Poll> findAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		if(request.authenticate(response)) {
-			return pollsService.findAll((SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		}
+	public List<Poll> findAll() throws Exception {
 		return pollsService.findAll();
+	}
+
+	@GetMapping("/user")
+	@ResponseBody
+	@Transactional(readOnly = true)
+	@PreAuthorize("isAuthenticated()")
+	public List<Poll> findAllByUser() throws Exception {
+		return pollsService.findAllByUser((SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 	}
 
 	@GetMapping("/{id}")

@@ -12,13 +12,15 @@ public interface PollsService {
 	
 	Poll create(PollDTO poll, SurveyUserDetails user);
 
+	void createRelationship(List<Long> pollIds, SurveyUserDetails user);
+
 	Poll update(PollDTO poll);
 
 	void remove(Long id);
 
 	List<Poll> findAll();
 
-	List<Poll> findAll(SurveyUserDetails user);
+	List<Poll> findAllByUser(SurveyUserDetails user);
 
 	Optional<Poll> findById(Long id);
 }

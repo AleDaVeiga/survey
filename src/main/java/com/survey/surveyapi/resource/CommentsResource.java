@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +32,10 @@ public class CommentsResource {
 	@Autowired
 	private CommentsService commentsService;
 
+	public CommentsResource(CommentsService commentsService) {
+		this.commentsService = commentsService;
+	}
+
 	@PostMapping("/{pollid}/comments")
 	@Transactional
 	public Comment create(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "pollid") Long pollId, @RequestParam("description") String description) throws Exception {
@@ -40,9 +45,15 @@ public class CommentsResource {
 		return commentsService.create(pollId, description);
 	}
 
-	@PutMapping("/{pollid}/comments/{id}")
+	@PostMapping("/{pollid}/comments/relationship")
 	@Transactional
 	@PreAuthorize("isAuthenticated()")
+	public void createRelationship(@PathVariable(value = "pollid") Long pollId, @RequestBody List<Long> commentIds) throws Exception {
+		commentsService.createRelationship(commentIds, (SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+	}
+
+	@PutMapping("/{pollid}/comments/{id}")
+	@Transactional
 	public Comment update(@PathVariable(value = "pollid") Long pollId, @PathVariable(value = "id") Long id, @RequestParam("description") String description) throws Exception {
 		return commentsService.update(id, description);
 	}
@@ -60,16 +71,21 @@ public class CommentsResource {
 	@GetMapping("/{pollid}/comments")
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<Comment> findAll(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "pollid") Long pollId) throws Exception {
-		if (request.authenticate(response)) {
-			return commentsService.findAll(pollId, (SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		}
+	public List<Comment> findAll(@PathVariable(value = "pollid") Long pollId) throws Exception {
 		return commentsService.findAll(pollId);
+	}
+
+	@GetMapping("/{pollid}/comments/user")
+	@ResponseBody
+	@Transactional(readOnly = true)
+	@PreAuthorize("isAuthenticated()")
+	public List<Comment> findAllByUser(@PathVariable(value = "pollid") Long pollId) throws Exception {
+		return commentsService.findAllByUser(pollId, (SurveyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 	}
 
 	@GetMapping("/{pollid}/comments/{id}")
 	@Transactional(readOnly = true)
-	public Comment findById(HttpServletRequest request, @PathVariable(value = "pollid") Long pollId, @PathVariable(value = "id") Long id) {
+	public Comment findById(@PathVariable(value = "pollid") Long pollId, @PathVariable(value = "id") Long id) {
 		return commentsService.findById(id).orElseThrow(() -> new NotFoundException("Comment", "id", id));
 	}
 }

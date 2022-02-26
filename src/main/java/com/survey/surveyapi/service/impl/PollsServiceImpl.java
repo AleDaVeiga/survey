@@ -42,6 +42,15 @@ public class PollsServiceImpl implements PollsService {
 	}
 
 	@Transactional
+	public void createRelationship(List<Long> pollIds, SurveyUserDetails user) {
+		for (Long pollId : pollIds) {
+			Poll poll = pollRepository.findById(pollId).get();
+			poll.setUser(userRepository.findById(user.getId()).get());
+			pollRepository.save(poll);
+		}
+	}
+
+	@Transactional
 	public Poll update(PollDTO pollDTO) {
 		return save(pollRepository.findById(pollDTO.getId()).get(), pollDTO);
 	}
@@ -59,7 +68,7 @@ public class PollsServiceImpl implements PollsService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Poll> findAll(SurveyUserDetails user) {
+	public List<Poll> findAllByUser(SurveyUserDetails user) {
 		return pollRepository.findByUser_Id(user.getId());
 	}
 

@@ -10,6 +10,8 @@ public interface CommentsService {
 	Comment create(Long pollId, String description);
 	
 	Comment create(Long pollId, String description, SurveyUserDetails user);
+
+	void createRelationship(List<Long> commentIds, SurveyUserDetails user);
 	
 	Comment update(Long id, String description);
 
@@ -17,7 +19,7 @@ public interface CommentsService {
 	
 	List<Comment> findAll(Long pollId);
 
-	List<Comment> findAll(Long pollId, SurveyUserDetails user);
+	List<Comment> findAllByUser(Long pollId, SurveyUserDetails user);
 
 	Optional<Comment> findById(Long id);
 }

@@ -43,6 +43,15 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Transactional
+	public void createRelationship(List<Long> commentIds, SurveyUserDetails user) {
+		for (Long commentId : commentIds) {
+			Comment comment = commentRepository.findById(commentId).get();
+			comment.setUser(userRepository.findById(user.getId()).get());
+			save(comment);
+		}
+	}
+
+	@Transactional
 	public Comment update(Long id, String description) {
 		Comment comment = commentRepository.findById(id).get();
 		comment.setDescription(description);
@@ -66,7 +75,7 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Comment> findAll(Long pollId, SurveyUserDetails user) {
+	public List<Comment> findAllByUser(Long pollId, SurveyUserDetails user) {
 		return commentRepository.findByPoll_IdAndUser_Id(pollId, user.getId());
 	}
 

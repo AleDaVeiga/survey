@@ -53,7 +53,13 @@ public class UsersServiceImpl implements UsersService {
 	private User save(UserDTO user) {
 		User newUser = new User(user.getLogin(), encoder.encode(user.getPassword()));
 
-		Set<String> rolesStr = user.getRoles();
+		Set<Role> roles = getRoles(user.getRoles());
+		newUser.setRoles(roles);
+		
+		return userRepository.save(newUser);
+	}
+
+	private Set<Role> getRoles(Set<String> rolesStr) {
 		Set<Role> roles = new HashSet<>();
 
 		rolesStr.forEach(role -> {
@@ -68,9 +74,7 @@ public class UsersServiceImpl implements UsersService {
 				roles.add(findRole(ROLE_PRODUCE));
 			}
 		});
-
-		newUser.setRoles(roles);
-		return userRepository.save(newUser);
+		return roles;
 	}
 
 	private Role findRole(Roles role) {

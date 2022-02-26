@@ -4,7 +4,7 @@ databaseChangeLog:
     author: Alessandro
     changes:
     - createTable:
-        tableName: contratos
+        tableName: comments
         columns:
         - column:
             name: id
@@ -43,4 +43,4 @@ databaseChangeLog:
             constraints:
               nullable: false
     - rollback:
-        tableName: contratos
+        tableName: comments
